@@ -16,13 +16,14 @@ public class TrybeHotelContext : DbContext, ITrybeHotelContext
     }
     public TrybeHotelContext() { }
 
-protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-    if (!optionsBuilder.IsConfigured)
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var connectionString = "Server=127.0.0.1;User Id=root;Password=123456;Port=3308;Database=TrybeHotel;";
-        optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), null);
+        if (!optionsBuilder.IsConfigured)
+        {
+            var connectionString = "Server=127.0.0.1;User Id=root;Password=123456;Port=3308;Database=TrybeHotel;";
+            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), null);
+        }
     }
-}
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
