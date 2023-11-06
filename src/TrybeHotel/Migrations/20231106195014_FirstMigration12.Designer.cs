@@ -12,8 +12,8 @@ using TrybeHotel.Repository;
 namespace TrybeHotel.Migrations
 {
     [DbContext(typeof(TrybeHotelContext))]
-    [Migration("20231106193827_FirstMigration13")]
-    partial class FirstMigration13
+    [Migration("20231106195014_FirstMigration12")]
+    partial class FirstMigration12
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
