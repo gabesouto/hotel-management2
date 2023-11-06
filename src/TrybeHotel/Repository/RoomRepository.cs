@@ -11,19 +11,67 @@ namespace TrybeHotel.Repository
             _context = context;
         }
 
-        // 7. Refatore o endpoint GET /room
+        // 6. Desenvolva o endpoint GET /room/:hotelId
         public IEnumerable<RoomDto> GetRooms(int HotelId)
         {
-           throw new NotImplementedException();
+            var get = (from r in this._context.Rooms
+                       where r.HotelId == HotelId
+                       select new RoomDto
+                       {
+                           roomId = r.RoomId,
+                           name = r.Name,
+                           capacity = r.Capacity,
+                           image = r.Image,
+                           hotel = new HotelDto
+                           {
+                               hotelId = r.Hotel.HotelId,
+                               name = r.Hotel.Name,
+                               address = r.Hotel.Address,
+                               cityId = r.Hotel.City.CityId,
+                               cityName = r.Hotel.City.Name,
+                               state = r.Hotel.City.State
+                           },
+
+                       }).ToList();
+            return get;
         }
 
-        // 8. Refatore o endpoint POST /room
-        public RoomDto AddRoom(Room room) {
-            throw new NotImplementedException();
+        // 7. Desenvolva o endpoint POST /room
+        public RoomDto AddRoom(Room room)
+        {
+            var addNewRoom = this._context.Rooms.Add(room);
+            this._context.SaveChanges();
+            var response = (from r in this._context.Rooms
+                            where r.Name == room.Name
+                            select new RoomDto
+                            {
+                                roomId = r.RoomId,
+                                name = r.Name,
+                                capacity = r.Capacity,
+                                image = r.Image,
+                                hotel = new HotelDto
+                                {
+                                    hotelId = r.Hotel.HotelId,
+                                    name = r.Hotel.Name,
+                                    address = r.Hotel.Address,
+                                    cityId = r.Hotel.City.CityId,
+                                    cityName = r.Hotel.City.Name,
+                                    state = r.Hotel.City.State
+
+                                },
+
+
+
+                            }).First();
+            return response;
         }
 
-        public void DeleteRoom(int RoomId) {
-           throw new NotImplementedException();
+        // 8. Desenvolva o endpoint DELETE /room/:roomId
+        public void DeleteRoom(int RoomId)
+        {
+            var deleteRoom = this._context.Rooms.Find(RoomId);
+            this._context.Rooms.Remove(deleteRoom);
+            this._context.SaveChanges();
         }
     }
 }
